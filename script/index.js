@@ -27,6 +27,17 @@ const displayLevelWord = (words) => {
     const wordContainer = document.getElementById('word-container');
     wordContainer.innerHTML = '';
 
+    // conditions of zero data
+    if(words?.data?.length === 0){
+        wordContainer.innerHTML = `
+            <div class="col-span-full text-center space-y-5">
+                <div class="w-20 mx-auto"><img class="mx-auto" src="./assets/alert-error.png"></div>
+                <p class="font-bangla text-sm">এই Lesson এ এখনো কোন Vocabulary যুক্ত করা হয়নি।</p>
+                <h2 class="font-bangla text-lg font-semibold text-[#292524]">নেক্সট Lesson এ যান</h2>
+            </div>
+        `;
+    }
+
     words?.data.forEach(word => {
         // console.log(word.word);
         const card = document.createElement('div');
