@@ -1,4 +1,9 @@
 
+const createElements = (arr) => {
+    const htmlElememts = arr.map(el => `<span class="bg-[#EDF7FF] py-2 px-1">${el}</span>`);
+    return (htmlElememts.join(" "));
+};
+
 const loadLessons = () => {
     fetch("https://openapi.programming-hero.com/api/levels/all") // promise of response
     .then(res => res.json()) // promise of json data
@@ -31,7 +36,49 @@ const loadWordDetail = async (id) => {
     // console.log(url);
     const res = await fetch(url);
     const details = await res.json();
-    console.log(details);
+    displayWordDetails(details?.data);
+};
+
+// {
+//     "word": "Eager",
+//     "meaning": "আগ্রহী",
+//     "pronunciation": "ইগার",
+//     "level": 1,
+//     "sentence": "The kids were eager to open their gifts.",
+//     "points": 1,
+//     "partsOfSpeech": "adjective",
+//     "synonyms": [
+//         "enthusiastic",
+//         "excited",
+//         "keen"
+//     ],
+//     "id": 5
+// }
+
+const displayWordDetails = (word) => {
+    console.log(word);
+    const detailsBox = document.getElementById('details-container');
+    detailsBox.innerHTML = `
+        <div>
+            <h2 class="mb-2 text-2xl font-bold">${word?.word} (<i class="fa-solid fa-microphone-lines"></i> :${word?.pronunciation})</h2>
+        </div>
+        <div>
+            <h2 class="mb-2 font-bold">Meaning</h2>
+            <p class="font-bangla text-base">${word?.meaning}</p>
+        </div>
+        <div>
+            <h2 class="mb-2 font-bold">Example</h2>
+            <p class="text-base">${word?.sentence}</p>
+        </div>
+        <div>
+            <h2 class="mb-2 font-bangle font-bold">সমার্থক শব্দ গুলো</h2>
+            <div class="flex items-center gap-3">
+               ${createElements(word?.synonyms)}
+            </div>
+        </div>
+    `;
+    document.getElementById('word_model').showModal();
+    
 };
 
 
