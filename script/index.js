@@ -1,7 +1,28 @@
 
 const createElements = (arr) => {
-    const htmlElememts = arr.map(el => `<span class="bg-[#EDF7FF] py-2 px-1">${el}</span>`);
+    const htmlElememts = arr.map(el => `<span class="bg-[#EDF7FF] py-1 px-3">${el}</span>`);
     return (htmlElememts.join(" "));
+};
+
+const manageSpinner = (status) => {
+    const spin = document.getElementById('spinner');
+    const word = document.getElementById('word-container');
+
+    if(status == true){
+        spin.classList.remove('hidden');
+        spin.classList.add('flex');
+        word.classList.add('hidden');
+
+        // document.getElementById('spinner').classList.remove("hidden");
+        // document.getElementById('spinner').classList.add("flex");
+        // document.getElementById('word-container').classList.add("hidden");
+    }else{
+        spin.classList.add('hidden');
+        word.classList.remove('hidden');
+        
+        // document.getElementById('spinner').classList.add("hidden");
+        // document.getElementById('word-container').classList.remove("hidden");
+    }
 };
 
 const loadLessons = () => {
@@ -17,6 +38,7 @@ const removeActive = () => {
 
 
 const loadLevelWord = (id) => {
+    manageSpinner(true);
     const url = `https://openapi.programming-hero.com/api/level/${id}`;
     // console.log(url);
     fetch(url)
@@ -29,6 +51,8 @@ const loadLevelWord = (id) => {
             displayLevelWord(data);
         });
 
+    manageSpinner(false);
+
 };
 
 const loadWordDetail = async (id) => {
@@ -38,22 +62,6 @@ const loadWordDetail = async (id) => {
     const details = await res.json();
     displayWordDetails(details?.data);
 };
-
-// {
-//     "word": "Eager",
-//     "meaning": "আগ্রহী",
-//     "pronunciation": "ইগার",
-//     "level": 1,
-//     "sentence": "The kids were eager to open their gifts.",
-//     "points": 1,
-//     "partsOfSpeech": "adjective",
-//     "synonyms": [
-//         "enthusiastic",
-//         "excited",
-//         "keen"
-//     ],
-//     "id": 5
-// }
 
 const displayWordDetails = (word) => {
     console.log(word);
@@ -96,6 +104,8 @@ const displayLevelWord = (words) => {
                 <h2 class="font-bangla text-lg font-semibold text-[#292524]">নেক্সট Lesson এ যান</h2>
             </div>
         `;
+        // manageSpinner(false);
+        // return;
     }
 
     words?.data.forEach(word => {
