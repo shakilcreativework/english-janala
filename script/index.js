@@ -26,6 +26,14 @@ const loadLevelWord = (id) => {
 
 };
 
+const loadWordDetail = async (id) => {
+    const url = `https://openapi.programming-hero.com/api/word/${id}`;
+    // console.log(url);
+    const res = await fetch(url);
+    const details = await res.json();
+    console.log(details);
+};
+
 
 const displayLevelWord = (words) => {
     // console.log(words?.data);
@@ -52,7 +60,7 @@ const displayLevelWord = (words) => {
             <p class="text-lg font-medium my-5">Meaning/Pronounciation</p>
             <div class="text-xl font-bold font-bangla text-[#18181B]">"${word?.meaning ? word?.meaning : 'Not a meaning'} / ${word?.pronunciation ? word?.pronunciation : 'Not a meaning'}"</div>
             <div class="flex justify-between items-center mt-10">
-                <button class="btn text-lg bg-[#1A91FF10] hover:bg-[#1A91FF90]"><i class="fa-solid fa-circle-info"></i></button>
+                <button onclick="loadWordDetail(${word?.id})" class="btn text-lg bg-[#1A91FF10] hover:bg-[#1A91FF90]"><i class="fa-solid fa-circle-info"></i></button>
                 <button class="btn text-lg bg-[#1A91FF10] hover:bg-[#1A91FF90]"><i class="fa-solid fa-volume-high"></i></button>
             </div>
             </div>
