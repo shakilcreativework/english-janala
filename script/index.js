@@ -42,7 +42,7 @@ const loadLevelWord = (id) => {
             const clickBtn = document.getElementById(`lesson-btn-${id}`);
             clickBtn.classList.add('active');
             // console.log('btn clicked');
-            displayLevelWord(data);
+            displayLevelWord(data?.data);
         });
 
     manageSpinner(false);
@@ -85,12 +85,12 @@ const displayWordDetails = (word) => {
 
 
 const displayLevelWord = (words) => {
-    // console.log(words?.data);
+    console.log(words);
     const wordContainer = document.getElementById('word-container');
     wordContainer.innerHTML = '';
 
     // conditions of zero data
-    if(words?.data?.length === 0){
+    if(words?.length === 0){
         wordContainer.innerHTML = `
             <div class="col-span-full text-center space-y-5">
                 <div class="w-20 mx-auto"><img class="mx-auto" src="./assets/alert-error.png"></div>
@@ -102,7 +102,7 @@ const displayLevelWord = (words) => {
         // return;
     }
 
-    words?.data.forEach(word => {
+    words?.map(word => {
         // console.log(word.word);
         const card = document.createElement('div');
         card.innerHTML = `
@@ -141,3 +141,19 @@ const displayLesson = (lessons) => {
 };
 
 loadLessons();
+
+document.getElementById('btn-search').addEventListener('click', () => {
+    const input = document.getElementById('input-search');
+    const searchValue = input.value.trim().toLowerCase();
+    console.log(searchValue);
+
+    fetch("https://openapi.programming-hero.com/api/words/all")
+        .then(res => res.json())
+        .then(data => {
+            const allWords = data?.data;
+            // console.log(allWords);
+            const filterWords = allWords.filter(word => word?.word.toLowerCase().includes(searchValue));
+            // console.log(filterWords);
+            displayLevelWord(filterWords);
+        });
+});
