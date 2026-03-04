@@ -9,19 +9,13 @@ const manageSpinner = (status) => {
     const word = document.getElementById('word-container');
 
     if(status == true){
-        spin.classList.remove('hidden');
-        spin.classList.add('flex');
-        word.classList.add('hidden');
-
-        // document.getElementById('spinner').classList.remove("hidden");
-        // document.getElementById('spinner').classList.add("flex");
-        // document.getElementById('word-container').classList.add("hidden");
+        spin.classList.remove("hidden");
+        spin.classList.add("flex");
+        word.classList.add("hidden");
     }else{
-        spin.classList.add('hidden');
-        word.classList.remove('hidden');
-        
-        // document.getElementById('spinner').classList.add("hidden");
-        // document.getElementById('word-container').classList.remove("hidden");
+        word.classList.remove("hidden");
+        spin.classList.add("hidden");
+        spin.classList.remove("flex");
     }
 };
 
