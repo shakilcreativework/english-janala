@@ -4,6 +4,13 @@ const createElements = (arr) => {
     return (htmlElememts.join(" "));
 };
 
+// voice implement
+function pronounceWord(word) {
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = "en-EN"; // English
+  window.speechSynthesis.speak(utterance);
+}
+
 const manageSpinner = (status) => {
     const spin = document.getElementById('spinner');
     const word = document.getElementById('word-container');
@@ -58,7 +65,7 @@ const loadWordDetail = async (id) => {
 };
 
 const displayWordDetails = (word) => {
-    console.log(word);
+    // console.log(word);
     const detailsBox = document.getElementById('details-container');
     detailsBox.innerHTML = `
         <div>
@@ -85,7 +92,7 @@ const displayWordDetails = (word) => {
 
 
 const displayLevelWord = (words) => {
-    console.log(words);
+    // console.log(words);
     const wordContainer = document.getElementById('word-container');
     wordContainer.innerHTML = '';
 
@@ -112,7 +119,7 @@ const displayLevelWord = (words) => {
             <div class="text-xl font-bold font-bangla text-[#18181B]">"${word?.meaning ? word?.meaning : 'Not a meaning'} / ${word?.pronunciation ? word?.pronunciation : 'Not a meaning'}"</div>
             <div class="flex justify-between items-center mt-10">
                 <button onclick="loadWordDetail(${word?.id})" class="btn text-lg bg-[#1A91FF10] hover:bg-[#1A91FF90]"><i class="fa-solid fa-circle-info"></i></button>
-                <button class="btn text-lg bg-[#1A91FF10] hover:bg-[#1A91FF90]"><i class="fa-solid fa-volume-high"></i></button>
+                <button onclick="pronounceWord('${word?.word}')" class="btn text-lg bg-[#1A91FF10] hover:bg-[#1A91FF90]"><i class="fa-solid fa-volume-high"></i></button>
             </div>
             </div>
         `;
@@ -143,6 +150,7 @@ const displayLesson = (lessons) => {
 loadLessons();
 
 document.getElementById('btn-search').addEventListener('click', () => {
+    removeActive();
     const input = document.getElementById('input-search');
     const searchValue = input.value.trim().toLowerCase();
     console.log(searchValue);
